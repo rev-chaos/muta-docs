@@ -4,22 +4,57 @@
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.19",
+    "@types/markdown-it": "^0.0.9",
+    "@types/markdown-it-anchor": "^4.0.3",
     "@types/node": "12.11.7",
     "@types/react": "16.9.10",
     "@types/react-dom": "16.9.2",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/styled-components": "^4.1.19",
+    "emoji-regex": "^8.0.0",
+    "github-markdown-css": "^3.0.1",
+    "markdown-it": "^10.0.0",
+    "markdown-it-anchor": "^5.2.5",
+    "markdown-it-emoji": "^1.4.0",
+    "markdown-it-highlightjs": "^3.0.0",
+    "markdown-it-table-of-contents": "^0.4.4",
+    "markdown-it-task-lists": "^2.1.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "typescript": "3.6.4"
+    "styled-components": "^4.4.0",
+    "typescript": "3.6.4",
+    "use-axios-client": "^1.0.1"
   },
   "scripts": {
+    "init": "node script/init.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
+    "prettier": "prettier --write src/**/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "browserslist": {
     "production": [
@@ -32,5 +67,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2"
   }
 }

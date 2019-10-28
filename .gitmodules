@@ -1,0 +1,3 @@
+[submodule "rfcs"]
+	path = rfcs
+	url = https://github.com/nervosnetwork/rfcs
