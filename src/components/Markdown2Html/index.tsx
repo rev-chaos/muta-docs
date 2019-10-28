@@ -34,10 +34,10 @@ const md: MarkdownIt = new MarkdownIt({
   typographer: true,
 })
   .use(mdItAnchor, {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkSymbol: '§',
-    level: [1, 2],
+    // permalink: true,
+    // permalinkBefore: true,
+    // permalinkSymbol: '§',
+    // level: [1, 2],
   })
   .use(mdItTaskLists)
   .use(mdItHLJS)

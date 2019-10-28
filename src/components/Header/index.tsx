@@ -7,10 +7,10 @@ const Header = styled.header`
   width: 100%;
   font-size: 18px;
   font-weight: 500;
-
   text-align: center;
   color: white;
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
   z-index: 999;
 `
