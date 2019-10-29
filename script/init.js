@@ -1,11 +1,11 @@
 const fs = require('fs')
 const path = require('path')
-const { input, output, dict } = require('./configuration')
+const { input, output, dict, version } = require('./configuration')
 
 const generateFilesMap = () => {
   const json = {
-    version: 1,
-    datetime: new Date().getTime(),
+    version,
+    // datetime: new Date().getTime(),
     dicts: {
       //
     },
