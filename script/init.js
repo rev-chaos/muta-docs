@@ -59,6 +59,24 @@ const copy = (src, dst) => {
   })
 }
 
+const deleteAll = deletePath => {
+  let files = []
+  if (fs.existsSync(deletePath)) {
+    files = fs.readdirSync(deletePath)
+    files.forEach(file => {
+      const curPath = path.join(deletePath, file)
+      if (fs.statSync(curPath).isDirectory()) {
+        deleteAll(curPath)
+      } else {
+        fs.unlinkSync(curPath)
+      }
+    })
+    fs.rmdirSync(deletePath)
+  }
+}
+
+deleteAll(output)
+
 checkDirectory(input, output, copy)
 
 generateFilesMap()

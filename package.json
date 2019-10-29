@@ -38,8 +38,8 @@
     "lint": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --write src/**/*.{js,jsx,ts,tsx}",
     "build:github": "env-cmd -f ./.env.github react-scripts build",
-    "predeploy": "yarn run build:github",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "yarn run init && yarn run build:github",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
