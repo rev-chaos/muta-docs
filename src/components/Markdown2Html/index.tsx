@@ -55,7 +55,7 @@ export default ({ markdown }: { markdown: string }) => {
   for (let i = 0; i < imgs.length; i++) {
     console.info(imgs[i].src)
     // const src = imgs[i].src
-    const path = `${window.location.host}${process.env.PUBLIC_URL || '/'}`
+    const path = `${window.location.host}${process.env.PUBLIC_URL}/`
     imgs[i].src = imgs[i].src.replace(path, `${path}markdown/`)
   }
   html = div.innerHTML
