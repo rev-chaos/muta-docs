@@ -37,7 +37,7 @@ export default ({ config }: { config: any }) => {
         render={(props: any) => {
           return (
             <Page>
-              <Header routeProps={props} />
+              <Header routeProps={props} config={config} />
               <Content
                 style={{
                   paddingLeft: 300,

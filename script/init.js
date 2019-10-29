@@ -7,8 +7,8 @@ const generateFilesMap = () => {
     version: 1,
     datetime: new Date().getTime(),
     dicts: {
-
-},
+      //
+    },
   }
   const appendJson = p => {
     const stat = fs.statSync(p)

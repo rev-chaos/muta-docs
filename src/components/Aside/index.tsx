@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import styled from 'styled-components'
@@ -15,9 +15,43 @@ const AsideDiv = styled.div`
   left: 0;
   z-index: 9;
   .menuFolder {
-    font-size: 18px;
-    font-weight: bold;
-    white-space: nowrap;
+    font-size: 16px;
+    // font-weight: bold;
+    .menuFolderName {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &::before {
+        content: '▸';
+      }
+    }
+    > div {
+      display: none;
+    }
+    > .menuFolderName {
+      display: block;
+      &: hover {
+        font-weight: bold;
+      }
+    }
+    &.menuFolder--open {
+      > div {
+        display: block;
+      }
+      .menuFolderName {
+        &::before {
+          content: '▾';
+        }
+      }
+    }
+    &.active {
+      > div {
+        display: block;
+      }
+      > .menuFolderName {
+        font-weight: bold;
+      }
+    }
   }
   .menu {
     margin-top: 5px;
@@ -26,6 +60,8 @@ const AsideDiv = styled.div`
     font-size: 16px;
     font-weight: normal;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &.active,&: hover {
       // width: 100%;
       // background-color: lightgrey;
@@ -53,12 +89,50 @@ const buildMenu = (rootMenuObj: any, strs: string[]) => {
     }
   }
   let parentMenuObj = rootMenuObj
-  // let parentMenu = ''
   for (let i = 1; i < strs.length; i++) {
     buildSubMenu(parentMenuObj, strs[i], strs.slice(0, i + 1).join('/'))
-    // parentMenu = strs[i]
     parentMenuObj = parentMenuObj[strs[i]]
   }
+}
+
+const MenuFolder = ({
+  children,
+  style,
+  title,
+  pathname,
+}: {
+  children: any
+  style: React.CSSProperties
+  title: string
+  pathname: string
+}) => {
+  const [open, setOpen] = useState(false)
+  let className = 'menuFolder'
+  if (pathname.split('/') && pathname.split('/').find(p => p === title)) {
+    // console.error(pathname.split('/'), title)
+    className += ' active'
+    className += ' menuFolder--open'
+  } else if (open) {
+    className += ' menuFolder--open'
+  }
+
+  // console.info(pathname, title)
+  return (
+    <div style={style} className={className}>
+      <div
+        role="menu"
+        tabIndex={-1}
+        className="menuFolderName"
+        onClick={() => {
+          setOpen(!open)
+        }}
+        onKeyPress={() => {}}
+      >
+        {title}
+      </div>
+      {children}
+    </div>
+  )
 }
 
 export default ({
@@ -80,7 +154,7 @@ export default ({
       }
     })
   }
-  console.info(JSON.stringify(rootMenu, null, 2))
+  // console.info(JSON.stringify(rootMenu, null, 2))
 
   const buildMenuUI = (menu: any, level: number) => {
     return Object.keys(menu).map((d: any, index: number) => {
@@ -110,15 +184,15 @@ export default ({
         )
       }
       return (
-        <div
-          className="menuFolder"
+        <MenuFolder
           style={{
             paddingLeft: level * 16,
           }}
+          title={d}
+          pathname={props.location.pathname}
         >
-          <div>{d}</div>
           {buildMenuUI(menu[d], level + 1)}
-        </div>
+        </MenuFolder>
       )
     })
   }

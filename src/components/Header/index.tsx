@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
 import logo from '../../static/logo.png'
+import SearchBar from '../SearchBar'
 
 const Header = styled.header`
   width: 100%;
@@ -18,7 +19,11 @@ const NavBar = styled.div`
   display: flex;
   height: 60px;
   line-height: 60px;
-  background-color: black;
+  // background-color: black;
+  font-size: 14px;
+  color: rgba(255, 255, 255);
+  background-color: rgb(36, 41, 46);
+  // padding: 16px;
   .logo img {
     width: 120px;
     height: 60px;
@@ -31,13 +36,14 @@ const NavBar = styled.div`
     &:hover {
       // opacity: 0.8;
       font-weight: bold;
+      color: rgba(255, 255, 255, 0.7);
       // background-color:#f2f3f8;
       // font-size: 15px;
       // transform: scale(1.05,1.05)
     }
-    &:last-child {
-      cursor: unset;
-    }
+    // &:last-child {
+    //   cursor: unset;
+    // }
   }
 `
 export const menus: any[] = [
@@ -45,13 +51,15 @@ export const menus: any[] = [
     name: '首页',
     path: '/',
   },
-  {
-    name: '搜索',
-    path: '/',
-  },
 ]
 
-export default ({ routeProps }: { routeProps: RouteComponentProps }) => {
+export default ({
+  routeProps,
+  config,
+}: {
+  routeProps: RouteComponentProps
+  config: any
+}) => {
   return (
     <Header>
       <NavBar>
@@ -85,6 +93,7 @@ export default ({ routeProps }: { routeProps: RouteComponentProps }) => {
             {menu.name}
           </div>
         ))}
+        <SearchBar config={config} routeProps={routeProps} />
       </NavBar>
     </Header>
   )
