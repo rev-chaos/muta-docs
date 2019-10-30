@@ -15,9 +15,14 @@ export default ({
     if (hash) {
       console.info(hash)
       try {
-        const element = document.querySelector(
-          hash.replace(hash.substr(1, 1), hash.substr(1, 1).toLocaleLowerCase())
-        ) as HTMLElement
+        // const element = document.querySelector(
+        //   encodeURI(hash.replace(hash.substr(1, 1), hash.substr(1, 1).toLocaleLowerCase()))
+        // ) as HTMLElement
+        const element =
+          document.getElementById(hash.substr(1)) ||
+          (document.getElementById(
+            hash.substr(1).toLocaleLowerCase()
+          ) as HTMLElement)
         if (element) {
           const rect: ClientRectList | DOMRectList = element.getClientRects()
           if (rect && rect[0]) {
@@ -31,7 +36,14 @@ export default ({
                 parseInt(style.paddingBottom || '0', 10) +
                 parseInt(style.height || '0', 10)
             }
-            window.scrollTo(0, rect[0].top + window.scrollY - height)
+            console.info(rect[0].top)
+            console.info(window.scrollY)
+            console.info(height)
+            const top = rect[0].top + window.scrollY - height
+            console.error(top)
+            setTimeout(() => {
+              window.scrollTo(0, top)
+            }, 100)
           }
         }
       } catch (err) {
