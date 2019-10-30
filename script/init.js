@@ -39,20 +39,17 @@ const checkDirectory = (src, dst, callback) => {
 }
 
 const copy = (src, dst) => {
-  const paths = fs.readdirSync(src) // 同步读取当前目录
+  const paths = fs.readdirSync(src)
   paths.forEach(filePath => {
     const from = `${src}/${filePath}`
     const to = `${dst}/${filePath}`
     fs.stat(from, (err, stats) => {
-      // stats  该对象 包含文件属性
       if (err) throw err
       if (stats.isFile()) {
-        // 如果是个文件则拷贝
-        const readable = fs.createReadStream(from) // 创建读取流
-        const writable = fs.createWriteStream(to) // 创建写入流
+        const readable = fs.createReadStream(from)
+        const writable = fs.createWriteStream(to)
         readable.pipe(writable)
       } else if (stats.isDirectory()) {
-        // 是目录则 递归
         checkDirectory(from, to, copy)
       }
     })
@@ -63,14 +60,15 @@ const deleteAll = deletePath => {
   let files = []
   if (fs.existsSync(deletePath)) {
     files = fs.readdirSync(deletePath)
-    files.forEach(file => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
       const curPath = path.join(deletePath, file)
       if (fs.statSync(curPath).isDirectory()) {
         deleteAll(curPath)
       } else {
         fs.unlinkSync(curPath)
       }
-    })
+    }
     fs.rmdirSync(deletePath)
   }
 }
