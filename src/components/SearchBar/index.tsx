@@ -20,7 +20,7 @@ const SearchBarDiv = styled.div`
     top: 0;
     right: 0;
     background-color: white;
-    border-radius: 2px 2px;
+    // border-radius: 2px 2px;
     h5 {
       border-bottom: 1px solid black;
       padding: 0 20px;
@@ -155,7 +155,7 @@ export default ({
         onKeyPress={() => {}}
       >
         <div
-          className="searchResultPanel"
+          className="searchResultPanel markdown-body"
           role="button"
           tabIndex={-1}
           onClick={e => !isEmpty && e.stopPropagation()}
