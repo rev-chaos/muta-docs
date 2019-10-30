@@ -9,6 +9,17 @@ const MarkdownDiv = styled.div`
   padding: 40px;
   display: flex;
   .outline {
+    ul {
+      padding-left: 16px;
+      li {
+        list-style: none;
+        a {
+          color: #606770;
+        }
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
+    }
     h2,
     h3,
     h4,
@@ -145,7 +156,28 @@ export default ({ markdown }: { markdown: string }) => {
   let html = md.render(markdown)
   const div = document.createElement('div')
   div.innerHTML = html
-  const outlineUI: any = getOutLineUI(html)
+
+  let outlineUI: any = div.querySelector('ul')
+  console.info(outlineUI)
+  if (outlineUI) {
+    const outlineHtml =
+      outlineUI.querySelector('ul') && outlineUI.querySelector('ul').outerHTML
+    div.removeChild(outlineUI)
+    outlineUI = (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: outlineHtml.replace(
+            /a href="#([\d\D]*?)"/g,
+            (_$0: string, $1: string) => {
+              return `a href="#${$1.toLocaleUpperCase()}"`
+            }
+          ),
+        }}
+      />
+    )
+  } else {
+    outlineUI = getOutLineUI(html)
+  }
 
   const imgs = div.querySelectorAll('img')
   for (let i = 0; i < imgs.length; i++) {
@@ -162,6 +194,7 @@ export default ({ markdown }: { markdown: string }) => {
         style={{
           flex: 3,
           overflowX: 'auto',
+          minHeight: window.innerHeight - (60 + 20 + 16 + 40) - 60,
         }}
         dangerouslySetInnerHTML={{
           __html: html,
@@ -186,6 +219,7 @@ export default ({ markdown }: { markdown: string }) => {
           <div
             style={{
               paddingLeft: 20,
+              paddingRight: 20,
               borderLeft: '1px solid #d1d5da',
             }}
           >
