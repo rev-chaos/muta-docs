@@ -1,4 +1,11 @@
 
+html {
+  scroll-behavior: smooth;
+}
+:target{ 
+  padding-top:60px;
+}
+
 body {
   margin: 0;
   padding: 0;

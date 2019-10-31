@@ -5,10 +5,10 @@ import styled from 'styled-components'
 
 const AsideDiv = styled.div`
   width: 300px;
-  border-radius: 3px 3px;
+  // border-radius: 3px 3px;
   padding: 16px;
   background-color: #fff;
-  border: 1px solid #d1d5da;
+  border-right: 1px solid #d1d5da;
   overflow-y: auto;
   position: fixed;
   top: 60px;

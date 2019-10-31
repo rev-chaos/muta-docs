@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
 
 const SearchBarDiv = styled.div`
-  width: 300px;
+  width: 250px;
   height: 60px;
   margin: 0 30px;
   input {
@@ -13,7 +13,10 @@ const SearchBarDiv = styled.div`
     text-align: center;
     color: black;
     border-radius: 2px 2px;
-    background-color: white;
+    background-color: hsla(0, 0%, 100%, 0.125);
+    &:focus {
+      background-color: white;
+    }
   }
   .searchResultPanel {
     position: absolute;

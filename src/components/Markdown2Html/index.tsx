@@ -6,7 +6,7 @@ import 'github-markdown-css'
 import styled from 'styled-components'
 
 const MarkdownDiv = styled.div`
-  padding: 40px;
+  padding: 0 40px;
   display: flex;
   .outline {
     ul {
@@ -152,13 +152,26 @@ const getOutLineUI = (html: string): any => {
   return outlineUI
 }
 
+const fixEncodeCharacters = (html: string): string => {
+  // return html
+  return html
+    .replace(/a href="#([\d\D]*?)"/g, (_$0: string, $1: string) => {
+      // return `a href="#${$1.toLocaleUpperCase()}"`
+      return `a href="#${decodeURI($1)}"`
+    })
+    .replace(/id="([\d\D]*?)"/g, (_$0: string, $1: string) => {
+      // return `a href="#${$1.toLocaleUpperCase()}"`
+      // console.error($1,1111111111)
+      return `id="${decodeURI($1)}"`
+    })
+}
+
 export default ({ markdown }: { markdown: string }) => {
   let html = md.render(markdown)
   const div = document.createElement('div')
-  div.innerHTML = html
+  div.innerHTML = fixEncodeCharacters(html)
 
   let outlineUI: any = div.querySelector('ul')
-  console.info(outlineUI)
   if (outlineUI) {
     const outlineHtml =
       outlineUI.querySelector('ul') && outlineUI.querySelector('ul').outerHTML
@@ -166,12 +179,7 @@ export default ({ markdown }: { markdown: string }) => {
     outlineUI = (
       <div
         dangerouslySetInnerHTML={{
-          __html: outlineHtml.replace(
-            /a href="#([\d\D]*?)"/g,
-            (_$0: string, $1: string) => {
-              return `a href="#${$1.toLocaleUpperCase()}"`
-            }
-          ),
+          __html: outlineHtml,
         }}
       />
     )
@@ -194,7 +202,7 @@ export default ({ markdown }: { markdown: string }) => {
         style={{
           flex: 3,
           overflowX: 'auto',
-          minHeight: window.innerHeight - (60 + 20 + 16 + 40) - 60,
+          minHeight: window.innerHeight - (60 + 16) * 2,
         }}
         dangerouslySetInnerHTML={{
           __html: html,
@@ -210,28 +218,30 @@ export default ({ markdown }: { markdown: string }) => {
           style={{
             width: 300,
             overflow: 'auto',
-            height: window.innerHeight - (60 + 20 + 16 + 40) - 60,
+            height: window.innerHeight - (60 + 16) * 2,
             position: 'fixed',
             right: 0,
-            top: 60 + 20 + 16 + 40,
+            top: 60 + 16,
           }}
         >
           <div
             style={{
-              paddingLeft: 20,
-              paddingRight: 20,
+              // paddingLeft: 20,
+              // paddingRight: 20,
+              marginTop: 24,
+              padding: 20,
               borderLeft: '1px solid #d1d5da',
             }}
           >
             {outlineUI}
-            <hr
-              style={{
-                height: 60,
-                border: 0,
-                backgroundColor: 'transparent',
-              }}
-            />
           </div>
+          <hr
+            style={{
+              height: 60,
+              border: 0,
+              backgroundColor: 'transparent',
+            }}
+          />
         </div>
       </div>
     </MarkdownDiv>
