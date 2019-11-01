@@ -30,6 +30,9 @@ const SearchBarDiv = styled.div`
     }
     overflow: auto;
     width: 530px;
+    @media only screen and (max-width: 750px) {
+      width: 100vw;
+    }
     max-height: 100%;
     .searchResultItem {
       .searchResultItemFile {
