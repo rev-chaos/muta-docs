@@ -25,6 +25,7 @@ const NavBar = styled.div`
   background-color: rgb(36, 41, 46);
   // padding: 16px;
   .logo img {
+    margin-left: 30px;
     width: 120px;
     height: 60px;
   }

@@ -14,6 +14,7 @@ import Aside from '../components/Aside'
 
 import HomePage from '../pages/Home'
 import NotFoundPage from '../pages/404'
+import MainDiv from './style'
 
 export default ({ config }: { config: any }) => {
   let pages: any[] = []
@@ -39,43 +40,41 @@ export default ({ config }: { config: any }) => {
           return (
             <Page>
               <Header routeProps={props} config={config} />
-              <Content
-                style={{
-                  paddingLeft: 300,
-                }}
-              >
-                <Aside config={config} routeProps={props} />
-                <Switch>
-                  <Redirect
-                    exact
-                    from="/"
-                    to={pages && pages.length > 0 && pages[0].path}
-                  />
-                  {pages.map(page => {
-                    return (
-                      <Route
-                        key={page.name}
-                        path={page.path}
-                        exact
-                        render={routeProps => (
-                          <page.comp
-                            routeProps={routeProps}
-                            value={page.value}
-                            url={page.path}
-                          />
-                        )}
-                      />
-                    )
-                  })}
-                  <Route
-                    path="/404"
-                    exact
-                    render={routeProps => (
-                      <NotFoundPage routeProps={routeProps} />
-                    )}
-                  />
-                  <Redirect from="*" to="/404" />
-                </Switch>
+              <Content>
+                <MainDiv>
+                  <Aside config={config} routeProps={props} />
+                  <Switch>
+                    <Redirect
+                      exact
+                      from="/"
+                      to={pages && pages.length > 0 && pages[0].path}
+                    />
+                    {pages.map(page => {
+                      return (
+                        <Route
+                          key={page.name}
+                          path={page.path}
+                          exact
+                          render={routeProps => (
+                            <page.comp
+                              routeProps={routeProps}
+                              value={page.value}
+                              url={page.path}
+                            />
+                          )}
+                        />
+                      )
+                    })}
+                    <Route
+                      path="/404"
+                      exact
+                      render={routeProps => (
+                        <NotFoundPage routeProps={routeProps} />
+                      )}
+                    />
+                    <Redirect from="*" to="/404" />
+                  </Switch>
+                </MainDiv>
               </Content>
               <Footer />
             </Page>
