@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import styled from 'styled-components'
 
-const AsideDiv = styled.div`
+const Aside = styled.aside`
   width: 300px;
   // border-radius: 3px 3px;
   padding: 16px;
@@ -45,9 +45,9 @@ const AsideDiv = styled.div`
       }
     }
     &.active {
-      > div {
-        display: block;
-      }
+      // > div {
+      //   display: block;
+      // }
       > .menuFolderName {
         font-weight: bold;
       }
@@ -99,21 +99,29 @@ const MenuFolder = ({
   children,
   style,
   title,
-  pathname,
-}: {
+  containCurrentPath,
+}: // pathname,
+{
   children: any
   style: React.CSSProperties
   title: string
-  pathname: string
+  containCurrentPath: boolean
+  // pathname: string
 }) => {
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(false)
   let className = 'menuFolder'
-  if (pathname.split('/') && pathname.split('/').find(p => p === title)) {
-    // console.error(pathname.split('/'), title)
+  useEffect(() => {
+    setActive(containCurrentPath)
+    if (containCurrentPath) {
+      setOpen(true)
+    }
+  }, [containCurrentPath])
+  if (open) {
+    className += ' menuFolder--open'
+  }
+  if (active) {
     className += ' active'
-    className += ' menuFolder--open'
-  } else if (open) {
-    className += ' menuFolder--open'
   }
 
   // console.info(pathname, title)
@@ -135,6 +143,43 @@ const MenuFolder = ({
   )
 }
 
+const Menu = ({
+  routeProps: props,
+  title,
+  path,
+  level,
+}: {
+  routeProps: RouteComponentProps
+  title: string
+  path: string
+  level: number
+}) => {
+  let className = 'menu'
+  const { location } = props
+  if (path === location.pathname) {
+    className += ' active'
+  }
+  return (
+    <div
+      className={className}
+      tabIndex={-1}
+      role="menu"
+      onKeyPress={() => {
+        //
+      }}
+      onClick={() => {
+        props.history.push(path)
+        window.scrollTo(0, 0)
+      }}
+      style={{
+        paddingLeft: level * 16,
+      }}
+    >
+      {title}
+    </div>
+  )
+}
+
 export default ({
   routeProps: props,
   config,
@@ -142,46 +187,24 @@ export default ({
   routeProps: RouteComponentProps
   config: any
 }) => {
-  const rootMenu: any = {
-    //
-  }
-  if (config && config.dicts) {
-    Object.keys(config.dicts).forEach((file: string): void => {
-      if (file) {
-        const path = file.replace(/\\/g, '/')
-        const strs = path.split('/')
-        buildMenu(rootMenu, strs)
-      }
-    })
-  }
-  // console.info(JSON.stringify(rootMenu, null, 2))
-
-  const buildMenuUI = (menu: any, level: number) => {
-    return Object.keys(menu).map((d: any, index: number) => {
+  const buildUIByDicts = (menu: any, level: number): any => {
+    return Object.keys(menu).map((d: any) => {
       if (typeof menu[d] === 'string') {
-        let className = 'menu'
-        if (menu[d] === props.location.pathname) {
-          className += ' active'
-        }
         return (
-          <div
-            className={className}
-            tabIndex={100 + index}
-            role="menu"
-            onKeyPress={() => {
-              //
-            }}
-            onClick={() => {
-              props.history.push(menu[d])
-              window.scrollTo(0, 0)
-            }}
-            style={{
-              paddingLeft: level * 16,
-            }}
-          >
-            {d}
-          </div>
+          <Menu
+            title={menu[d]}
+            level={level}
+            path={menu[d]}
+            routeProps={props}
+          />
         )
+      }
+      let containCurrentPath = false
+      if (
+        props.location.pathname.split('/') &&
+        props.location.pathname.split('/').find(p => p === d)
+      ) {
+        containCurrentPath = true
       }
       return (
         <MenuFolder
@@ -189,44 +212,98 @@ export default ({
             paddingLeft: level * 16,
           }}
           title={d}
-          pathname={props.location.pathname}
+          containCurrentPath={containCurrentPath}
+          // pathname={props.location.pathname}
         >
-          {buildMenuUI(menu[d], level + 1)}
+          {buildUIByDicts(menu[d], level + 1)}
         </MenuFolder>
       )
     })
   }
+
+  const buildUIByMenus = (ulElement: HTMLElement, level: number): any => {
+    const UI = []
+    for (let i = 0; i < ulElement.children.length; i++) {
+      const li = ulElement.children[i] as HTMLElement
+      const subUlElement = li.querySelector('ul') as HTMLElement
+      if (subUlElement) {
+        const title = (li.firstChild as ChildNode).nodeValue || ''
+        const aElements: NodeListOf<
+          HTMLAnchorElement
+        > = subUlElement.querySelectorAll('a')
+        let containCurrentPath = false
+        for (let j = 0; j < aElements.length; j++) {
+          if (aElements[j].href.endsWith(props.location.pathname)) {
+            containCurrentPath = true
+            break
+          }
+        }
+        UI.push(
+          <MenuFolder
+            style={{
+              paddingLeft: level * 16,
+            }}
+            title={title}
+            containCurrentPath={containCurrentPath}
+          >
+            {buildUIByMenus(subUlElement, level + 1)}
+          </MenuFolder>
+        )
+      } else {
+        const aElement = li.querySelector('a') as HTMLAnchorElement
+        const url = aElement.href.replace(
+          `${window.location.protocol}//${window.location.host}${process.env.PUBLIC_URL}`,
+          ''
+        )
+
+        UI.push(
+          <Menu
+            key={i}
+            title={li.innerText}
+            path={url}
+            level={level}
+            routeProps={props}
+          />
+        )
+      }
+    }
+    return UI
+  }
+  const buildUI = (): any => {
+    if (config) {
+      if (config.menus) {
+        const element = document.createElement('div')
+        element.innerHTML = config.menus
+        const ulElement = element.querySelector('ul') as HTMLElement
+        return buildUIByMenus(ulElement, 0)
+      }
+      if (config.dicts) {
+        const rootMenu: any = {
+          //
+        }
+        if (config && config.dicts) {
+          Object.keys(config.dicts).forEach((file: string): void => {
+            if (file) {
+              const path = file.replace(/\\/g, '/')
+              const strs = path.split('/')
+              buildMenu(rootMenu, strs)
+            }
+          })
+        }
+        return buildUIByDicts(rootMenu, 0)
+      }
+    }
+    return null
+  }
+
   return (
-    <AsideDiv
+    <Aside
       className="markdown-body"
       style={{
         height: window.innerHeight - 60,
       }}
     >
-      {/* {config &&
-        config.dicts &&
-        Object.keys(config.dicts).map(
-          (file: string, index: number) => {
-            const path = file.replace(/\\/g, '/')
-            return (
-              <div
-                className='menu'
-                tabIndex={100 + index}
-                role="menu"
-                onKeyPress={() => {
-                  //
-                }}
-                onClick={() => {
-                  props.history.push(path)
-                  window.scrollTo(0, 0)
-                }}
-              >
-                {path}
-              </div>
-            )
-          }
-        )} */}
-      {buildMenuUI(rootMenu, 0)}
+      {buildUI()}
       <hr
         style={{
           height: 60,
@@ -234,6 +311,6 @@ export default ({
           backgroundColor: 'transparent',
         }}
       />
-    </AsideDiv>
+    </Aside>
   )
 }

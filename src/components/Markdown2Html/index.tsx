@@ -1,9 +1,9 @@
 import React from 'react'
-import MarkdownIt from 'markdown-it'
-import mdItAnchor from 'markdown-it-anchor'
 import 'github-markdown-css'
 
 import styled from 'styled-components'
+
+const { markdown2html } = require('../../utils/markdown2html.js')
 
 const MarkdownDiv = styled.div`
   padding: 0 40px;
@@ -54,51 +54,6 @@ const MarkdownDiv = styled.div`
     }
   }
 `
-
-const mdItTaskLists = require('markdown-it-task-lists')
-const mdItHLJS = require('markdown-it-highlightjs')
-const mdItTOC = require('markdown-it-table-of-contents')
-const mdItEmoji = require('markdown-it-emoji')
-const emojiRegex = require('emoji-regex')()
-
-const slugify = (text: string) => {
-  return (
-    text
-      .toLowerCase()
-      .replace(/\s/g, '-')
-      // Remove punctuations other than hyphen and underscore
-      .replace(
-        /[`~!@#$%^&*()+=<>?,./:;"'|{}[\]\\\u2000-\u206F\u2E00-\u2E7F]/g,
-        ''
-      )
-      // Remove emojis
-      .replace(emojiRegex, '')
-      // Remove CJK punctuations
-      .replace(
-        /[\u3000。？！，、；：“”【】（）〔〕［］﹃﹄“”‘’﹁﹂—…－～《》〈〉「」]/g,
-        ''
-      )
-  )
-}
-
-const md: MarkdownIt = new MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-})
-  .use(mdItAnchor, {
-    // permalink: true,
-    // permalinkBefore: true,
-    // permalinkSymbol: '§',
-    // level: [1, 2],
-  })
-  .use(mdItTaskLists)
-  .use(mdItHLJS)
-  .use(mdItEmoji)
-  .use(mdItTOC, {
-    includeLevel: [1, 2, 3, 4, 5, 6],
-    slugify,
-  })
 
 const getOutLineUI = (html: string): any => {
   const outlineUI = []
@@ -166,8 +121,8 @@ const fixEncodeCharacters = (html: string): string => {
     })
 }
 
-export default ({ markdown }: { markdown: string }) => {
-  let html = md.render(markdown)
+export default ({ value }: { value: any }) => {
+  let html = markdown2html(value.markdown || '')
   const div = document.createElement('div')
   div.innerHTML = fixEncodeCharacters(html)
 

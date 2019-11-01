@@ -72,11 +72,12 @@ export default ({
       const regexp = new RegExp(searchCondition.value, 'g')
       const divElement = document.createElement('div')
       Object.keys(config.dicts).forEach((file: string): void => {
-        const resulting = config.dicts[file].replace(
+        const { markdown } = config.dicts[file]
+        const resulting = markdown.replace(
           regexp,
           "<span class='myHighLight'>$&</span>"
         )
-        if (resulting !== config.dicts[file]) {
+        if (resulting !== markdown) {
           divElement.innerHTML = resulting
           const elements = divElement.querySelectorAll('span.myHighLight')
           for (let i = 0; i < elements.length; i++) {

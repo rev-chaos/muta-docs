@@ -59,7 +59,7 @@ export default ({ config }: { config: any }) => {
                           <page.comp
                             key={page.name}
                             routeProps={routeProps}
-                            markdown={page.value}
+                            value={page.value}
                           />
                         )}
                       />

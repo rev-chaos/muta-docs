@@ -2,7 +2,7 @@ import React from 'react'
 // import { RouteComponentProps } from 'react-router-dom'
 import Markdown2Html from '../../components/Markdown2Html'
 
-export default ({ markdown }: { markdown: string }) => {
+export default ({ value }: { value: any }) => {
   // const { hash } = routeProps.location
   // useEffect(() => {
   //   // window.location.hash =  hash;
@@ -55,7 +55,7 @@ export default ({ markdown }: { markdown: string }) => {
         margin: '0 20px',
       }}
     >
-      <Markdown2Html markdown={markdown} />
+      <Markdown2Html value={value} />
     </div>
   )
 }

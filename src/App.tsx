@@ -77,8 +77,9 @@ const AppDiv = styled.div`
   }
 `
 const App: React.FC = () => {
+  const language = 'zh'
   const { data, error } = useAxios({
-    url: `${window.location.protocol}//${window.location.host}${process.env.PUBLIC_URL}/markdown.json`,
+    url: `${window.location.protocol}//${window.location.host}${process.env.PUBLIC_URL}/data-${language}.json`,
   })
   // console.info(data, error, loading)
   if (data)

@@ -6,6 +6,8 @@
 .pnp.js
 
 /public/markdown/
+/public/data-*.json
+/public/markdown.json
 
 # testing
 /coverage
