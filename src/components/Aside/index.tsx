@@ -251,20 +251,20 @@ export default ({
         )
       } else {
         const aElement = li.querySelector('a') as HTMLAnchorElement
-        const url = aElement.href.replace(
-          `${window.location.protocol}//${window.location.host}${process.env.PUBLIC_URL}`,
-          ''
-        )
-
-        UI.push(
-          <Menu
-            key={i}
-            title={li.innerText}
-            path={url}
-            level={level}
-            routeProps={props}
-          />
-        )
+        const regex = /href="([\d\D]*?)"/
+        const matches = aElement.outerHTML.match(regex)
+        if (matches && matches[1]) {
+          const url = `${matches[1]}`.replace('./', `/${config.language}/`)
+          UI.push(
+            <Menu
+              key={i}
+              title={li.innerText}
+              path={url}
+              level={level}
+              routeProps={props}
+            />
+          )
+        }
       }
     }
     return UI

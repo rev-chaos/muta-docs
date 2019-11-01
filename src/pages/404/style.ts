@@ -19,16 +19,6 @@ export const NotFoundVHCenterDiv = styled.div`
       font-size: 21px;
       font-weight: 500;
       text-align: center;
-      color: #ffffff;
-    }
-    .button {
-      margin: 0 auto;
-      margin-top: 73px;
-      width: 311px;
-      height: 52px;
-      &: hover {
-        cursor: pointer;
-      }
     }
   }
 `

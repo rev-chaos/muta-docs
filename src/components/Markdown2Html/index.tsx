@@ -121,7 +121,7 @@ const fixEncodeCharacters = (html: string): string => {
     })
 }
 
-export default ({ value }: { value: any }) => {
+export default ({ value, url }: { value: any; url: string }) => {
   let html = markdown2html(value.markdown || '')
   const div = document.createElement('div')
   div.innerHTML = fixEncodeCharacters(html)
@@ -144,8 +144,6 @@ export default ({ value }: { value: any }) => {
 
   const imgs = div.querySelectorAll('img')
   for (let i = 0; i < imgs.length; i++) {
-    // console.info(imgs[i].src)
-    // const src = imgs[i].src
     const path = `${window.location.host}${process.env.PUBLIC_URL}/`
     imgs[i].src = imgs[i].src.replace(path, `${path}markdown/`)
   }
@@ -159,10 +157,29 @@ export default ({ value }: { value: any }) => {
           overflowX: 'auto',
           minHeight: window.innerHeight - (60 + 16) * 2,
         }}
-        dangerouslySetInnerHTML={{
-          __html: html,
-        }}
-      />
+      >
+        <div
+          style={{
+            float: 'right',
+          }}
+        >
+          <a
+            href={`https://github.com/nervosnetwork/muta-docs/tree/master/docs${url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="button">Edit</div>
+          </a>
+        </div>
+        <div
+          style={{
+            marginTop: -28,
+          }}
+          dangerouslySetInnerHTML={{
+            __html: html,
+          }}
+        />
+      </div>
       <div
         style={{
           flex: 1,
@@ -185,18 +202,19 @@ export default ({ value }: { value: any }) => {
               // paddingRight: 20,
               marginTop: 24,
               padding: 20,
+              fontSize: 13,
               borderLeft: '1px solid #d1d5da',
             }}
           >
             {outlineUI}
           </div>
-          <hr
+          {/* <hr
             style={{
               height: 60,
               border: 0,
               backgroundColor: 'transparent',
             }}
-          />
+          /> */}
         </div>
       </div>
     </MarkdownDiv>

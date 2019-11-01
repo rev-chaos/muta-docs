@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   BrowserRouter as Router,
+  RouteComponentProps,
   Route,
   Redirect,
   Switch,
@@ -29,12 +30,12 @@ export default ({ config }: { config: any }) => {
     })
   }
 
-  const basename: any = process.env.PUBLIC_URL || '/'
+  const basename: any = process.env.PUBLIC_URL || ''
 
   return (
     <Router basename={basename}>
       <Route
-        render={(props: any) => {
+        render={(props: RouteComponentProps) => {
           return (
             <Page>
               <Header routeProps={props} config={config} />
@@ -55,11 +56,12 @@ export default ({ config }: { config: any }) => {
                       <Route
                         key={page.name}
                         path={page.path}
+                        exact
                         render={routeProps => (
                           <page.comp
-                            key={page.name}
                             routeProps={routeProps}
                             value={page.value}
+                            url={page.path}
                           />
                         )}
                       />

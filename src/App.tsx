@@ -69,6 +69,24 @@ const AppDiv = styled.div`
       border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
+  .button {
+    border: 1px solid #231719;
+    border-radius: 3px;
+    color: #231719;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2em;
+    padding: 5px 10px;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    &: hover {
+      background-color: #231719;
+      color: white;
+    }
+  }
   .vhCenter {
     width: 100%;
     display: flex;
