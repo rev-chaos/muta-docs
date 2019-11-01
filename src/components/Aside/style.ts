@@ -37,6 +37,7 @@ export default styled.aside`
   left: 0;
   z-index: 9;
   .menuFolder {
+    position: relative;
     font-size: 16px;
     // font-weight: bold;
     .menuFolderName {
@@ -45,6 +46,8 @@ export default styled.aside`
       text-overflow: ellipsis;
       &::before {
         content: '▸';
+        position: absolute;
+        left: -14px;
       }
     }
     > div {
