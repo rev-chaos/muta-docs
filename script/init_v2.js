@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { input, output, dataNameTpl, dataMenu } = require('./configuration_v2')
+const { input, output, dataNameTpl, dataMenu, dataDefault } = require('./configuration_v2')
 const { markdown2html } = require('../src/utils/markdown2html')
 
 const generateFilesMapByLanguage = language => {
@@ -10,10 +10,18 @@ const generateFilesMapByLanguage = language => {
       //
     },
     menus: '',
+    default: '',
   }
   const menuFile = dataMenu.replace('[language]', language)
-  const menus = markdown2html(fs.readFileSync(menuFile).toString())
-  json.menus = menus
+  if (fs.existsSync(menuFile)) {
+    const menus = markdown2html(fs.readFileSync(menuFile).toString())
+    json.menus = menus
+  }
+
+  const defaultFile = dataDefault.replace('[language]', language)
+  if (fs.existsSync(defaultFile)) {
+    json.default = defaultFile.replace(input, '')
+  }
 
   const appendJson = p => {
     const stat = fs.statSync(p)
@@ -34,6 +42,7 @@ const generateFilesMapByLanguage = language => {
   }
   appendJson(path.join(input, language))
   const file = dataNameTpl.replace('[language]', language)
+
   fs.writeFileSync(file, JSON.stringify(json))
   // return file.substr(file.lastIndexOf(path.sep) + 1)
   // return json

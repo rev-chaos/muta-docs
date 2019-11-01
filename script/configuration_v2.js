@@ -5,4 +5,5 @@ module.exports = {
   output: path.join(__dirname, '../public/markdown'),
   dataNameTpl: path.join(__dirname, '../public/data-[language].json'),
   dataMenu: path.join(__dirname, '../muta-docs/docs/[language]/index.md'),
+  dataDefault: path.join(__dirname, '../muta-docs/docs/[language]/overview.md'),
 }

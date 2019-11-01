@@ -18,7 +18,13 @@ import MainDiv from './style'
 
 export default ({ config }: { config: any }) => {
   let pages: any[] = []
+  let defaultPage: string = ''
+
   if (config && config.dicts) {
+    if (config.default) {
+      const path = config.default.replace(/\\/g, '/')
+      defaultPage = path
+    }
     pages = Object.keys(config.dicts).map((file: string) => {
       const path = file.replace(/\\/g, '/')
       const value: any = config.dicts && config.dicts[file]
@@ -29,7 +35,11 @@ export default ({ config }: { config: any }) => {
         value,
       }
     })
+    if (!defaultPage) {
+      defaultPage = pages && pages.length > 0 && pages[0].path
+    }
   }
+  console.info(defaultPage)
 
   const basename: any = process.env.PUBLIC_URL || ''
 
@@ -44,11 +54,7 @@ export default ({ config }: { config: any }) => {
                 <MainDiv>
                   <Aside config={config} routeProps={props} />
                   <Switch>
-                    <Redirect
-                      exact
-                      from="/"
-                      to={pages && pages.length > 0 && pages[0].path}
-                    />
+                    <Redirect exact from="/" to={defaultPage} />
                     {pages.map(page => {
                       return (
                         <Route

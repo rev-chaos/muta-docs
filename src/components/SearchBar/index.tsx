@@ -152,6 +152,7 @@ export default ({
         ref={inputSearchCondition}
         type="text"
         placeholder="Search"
+        onFocus={search}
         onChange={search}
       />
       <div
