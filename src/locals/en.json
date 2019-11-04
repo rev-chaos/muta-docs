@@ -1,0 +1,25 @@
+{
+  "translation": {
+    "app": {
+      "languages": {
+        "en": "English",
+        "zh": "中文"
+      }
+    },
+    "header": {
+      "menus": {
+        "home": "Home"
+      },
+      "search": {
+        "placeholder": "Search",
+        "notfound": "Not Found"
+      }
+    },
+    "footer": {
+      "org": "© 2019 MUTA blockchain framework. All Rights Reserved."
+    },
+    "pages": {
+      "home": {}
+    }
+  }
+}

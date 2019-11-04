@@ -13,7 +13,7 @@ export default styled.aside`
     background: url(${toggle}) no-repeat center center;
     background-color: rgb(36, 41, 46);
     z-index: 999;
-    transition: width 100ms linear;
+    transition: width 10ms linear;
     &:hover {
       background: unset;
       background-color: rgb(36, 41, 46);

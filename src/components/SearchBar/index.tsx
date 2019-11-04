@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
+import i18n from '../../locals'
 
 const SearchBarDiv = styled.div`
-  width: 250px;
+  width: 220px;
   height: 60px;
-  margin: 0 30px;
+  margin: 0 5px 0 30px;
   input {
     width: 100%;
     height: 40px;
@@ -118,7 +119,7 @@ export default ({
             cursor: 'unset',
           }}
         >
-          Not found
+          {i18n.t('header.search.notfound')}
         </div>
       </div>
     )
@@ -151,7 +152,7 @@ export default ({
       <input
         ref={inputSearchCondition}
         type="text"
-        placeholder="Search"
+        placeholder={i18n.t('header.search.placeholder')}
         onFocus={search}
         onChange={search}
       />

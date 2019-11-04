@@ -1,0 +1,22 @@
+{
+  "translation": {
+    "app": {
+      "languages": {
+        "en": "English",
+        "zh": "中文"
+      }
+    },
+    "header": {
+      "menus": {
+        "home": "首页"
+      },
+      "search": {
+        "placeholder": "搜索",
+        "notfound": "未找到"
+      }
+    },
+    "footer": {
+      "org": "© 2019 MUTA 区块链框架. All Rights Reserved."
+    }
+  }
+}

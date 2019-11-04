@@ -155,50 +155,51 @@ export default ({
 
   const buildUIByMenus = (ulElement: HTMLElement, level: number): any => {
     const UI = []
-    for (let i = 0; i < ulElement.children.length; i++) {
-      const li = ulElement.children[i] as HTMLElement
-      const subUlElement = li.querySelector('ul') as HTMLElement
-      if (subUlElement) {
-        const title = (li.firstChild as ChildNode).nodeValue || ''
-        const aElements: NodeListOf<
-          HTMLAnchorElement
-        > = subUlElement.querySelectorAll('a')
-        let containCurrentPath = false
-        for (let j = 0; j < aElements.length; j++) {
-          if (aElements[j].href.endsWith(props.location.pathname)) {
-            containCurrentPath = true
-            break
+    if (ulElement && ulElement.children)
+      for (let i = 0; i < ulElement.children.length; i++) {
+        const li = ulElement.children[i] as HTMLElement
+        const subUlElement = li.querySelector('ul') as HTMLElement
+        if (subUlElement) {
+          const title = (li.firstChild as ChildNode).nodeValue || ''
+          const aElements: NodeListOf<
+            HTMLAnchorElement
+          > = subUlElement.querySelectorAll('a')
+          let containCurrentPath = false
+          for (let j = 0; j < aElements.length; j++) {
+            if (aElements[j].href.endsWith(props.location.pathname)) {
+              containCurrentPath = true
+              break
+            }
+          }
+          UI.push(
+            <MenuFolder
+              style={{
+                paddingLeft: level * 16,
+              }}
+              title={title}
+              containCurrentPath={containCurrentPath}
+            >
+              {buildUIByMenus(subUlElement, level + 1)}
+            </MenuFolder>
+          )
+        } else {
+          const aElement = li.querySelector('a') as HTMLAnchorElement
+          const regex = /href="([\d\D]*?)"/
+          const matches = aElement.outerHTML.match(regex)
+          if (matches && matches[1]) {
+            const url = `${matches[1]}`.replace('./', `/${config.language}/`)
+            UI.push(
+              <Menu
+                key={i}
+                title={li.innerText}
+                path={url}
+                level={level}
+                routeProps={props}
+              />
+            )
           }
         }
-        UI.push(
-          <MenuFolder
-            style={{
-              paddingLeft: level * 16,
-            }}
-            title={title}
-            containCurrentPath={containCurrentPath}
-          >
-            {buildUIByMenus(subUlElement, level + 1)}
-          </MenuFolder>
-        )
-      } else {
-        const aElement = li.querySelector('a') as HTMLAnchorElement
-        const regex = /href="([\d\D]*?)"/
-        const matches = aElement.outerHTML.match(regex)
-        if (matches && matches[1]) {
-          const url = `${matches[1]}`.replace('./', `/${config.language}/`)
-          UI.push(
-            <Menu
-              key={i}
-              title={li.innerText}
-              path={url}
-              level={level}
-              routeProps={props}
-            />
-          )
-        }
       }
-    }
     return UI
   }
   const buildUI = (): any => {

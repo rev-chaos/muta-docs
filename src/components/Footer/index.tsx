@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import i18n from '../../locals'
 
 const Footer = styled.footer`
   width: 100%;
@@ -13,5 +14,5 @@ const Footer = styled.footer`
   z-index: 10;
 `
 export default () => {
-  return <Footer>© 2019 MUTA blockchain framework</Footer>
+  return <Footer>{i18n.t('footer.org')}</Footer>
 }

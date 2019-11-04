@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import LoadingComponent from './components/Loading'
 import ErrorComponent from './components/Error'
 import Routes from './route'
+import i18n from './locals'
 
 const AppDiv = styled.div`
   width: 100vw;
@@ -95,7 +96,7 @@ const AppDiv = styled.div`
   }
 `
 const App: React.FC = () => {
-  const language = 'zh'
+  const language = i18n.language || 'zh'
   const { data, error } = useAxios({
     url: `${window.location.protocol}//${window.location.host}${process.env.PUBLIC_URL}/data-${language}.json`,
   })

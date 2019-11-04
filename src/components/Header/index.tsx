@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
 import logo from '../../static/logo.png'
 import SearchBar from '../SearchBar'
+import Language from './Language'
+import i18n from '../../locals'
 
 const Header = styled.header`
   width: 100%;
@@ -14,16 +16,12 @@ const Header = styled.header`
   position: -webkit-sticky;
   top: 0;
   z-index: 999;
-`
-const NavBar = styled.div`
   display: flex;
   height: 60px;
   line-height: 60px;
-  // background-color: black;
   font-size: 14px;
   color: rgba(255, 255, 255);
   background-color: rgb(36, 41, 46);
-  // padding: 16px;
   .logo img {
     margin-left: 30px;
     width: 120px;
@@ -35,21 +33,18 @@ const NavBar = styled.div`
     width: 100px;
     &.active,
     &:hover {
-      // opacity: 0.8;
       font-weight: bold;
       color: rgba(255, 255, 255, 0.7);
-      // background-color:#f2f3f8;
-      // font-size: 15px;
-      // transform: scale(1.05,1.05)
     }
     // &:last-child {
     //   cursor: unset;
     // }
   }
 `
+
 export const menus: any[] = [
   {
-    name: '首页',
+    name: i18n.t('header.menus.home'),
     path: '/',
   },
 ]
@@ -63,39 +58,39 @@ export default ({
 }) => {
   return (
     <Header>
-      <NavBar>
+      <div
+        role="menu"
+        tabIndex={0}
+        className="logo"
+        onClick={() => {
+          routeProps.history.push('/')
+        }}
+        onKeyPress={() => {}}
+      >
+        <img src={logo} alt="logo" />
+      </div>
+
+      <div
+        style={{
+          flex: 1,
+        }}
+      />
+
+      {menus.map((menu: any, i: number) => (
         <div
           role="menu"
-          tabIndex={0}
-          className="logo"
-          onClick={() => {
-            routeProps.history.push('/')
-          }}
+          tabIndex={i + 1}
+          className={`menu${
+            menu.path === routeProps.location.pathname ? ' active' : ''
+          }`}
+          onClick={() => routeProps.history.push(menu.path)}
           onKeyPress={() => {}}
         >
-          <img src={logo} alt="logo" />
+          {menu.name}
         </div>
-
-        <div
-          style={{
-            flex: 1,
-          }}
-        />
-        {menus.map((menu: any, i: number) => (
-          <div
-            role="menu"
-            tabIndex={i + 1}
-            className={`menu${
-              menu.path === routeProps.location.pathname ? ' active' : ''
-            }`}
-            onClick={() => routeProps.history.push(menu.path)}
-            onKeyPress={() => {}}
-          >
-            {menu.name}
-          </div>
-        ))}
-        <SearchBar config={config} routeProps={routeProps} />
-      </NavBar>
+      ))}
+      <SearchBar config={config} routeProps={routeProps} />
+      <Language />
     </Header>
   )
 }
