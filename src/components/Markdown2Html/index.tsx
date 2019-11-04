@@ -75,8 +75,7 @@ export default ({ value, url }: { value: any; url: string }) => {
   let html = markdown2html(value.markdown || '')
   const div = document.createElement('div')
   div.innerHTML = fixEncodeCharacters(html)
-
-  let outlineUI: any = div.querySelector('ul')
+  let outlineUI: any = div.querySelector('h1+ul,h2+ul')
   if (outlineUI) {
     const outlineHtml =
       outlineUI.querySelector('ul') && outlineUI.querySelector('ul').outerHTML
