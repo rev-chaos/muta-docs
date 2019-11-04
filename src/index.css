@@ -2,8 +2,12 @@
 html {
   scroll-behavior: smooth;
 }
-:target{ 
-  padding-top:60px;
+:target:before{ 
+    display: block;
+    content: ' ';
+    height: 60px;
+    margin-top: -60px;
+    visibility: hidden;
 }
 
 body {

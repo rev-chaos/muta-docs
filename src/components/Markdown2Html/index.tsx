@@ -102,6 +102,7 @@ export default ({ value, url }: { value: any; url: string }) => {
   return (
     <MarkdownDiv className="markdown-body">
       <div
+        className="docContainer"
         style={{
           flex: 3,
           overflowX: 'auto',
