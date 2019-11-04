@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/muta-docs/static/css/main.20664993.chunk.css",
+    "main.js": "/muta-docs/static/js/main.a9d0f143.chunk.js",
+    "main.js.map": "/muta-docs/static/js/main.a9d0f143.chunk.js.map",
+    "runtime-main.js": "/muta-docs/static/js/runtime-main.ccf8f8ce.js",
+    "runtime-main.js.map": "/muta-docs/static/js/runtime-main.ccf8f8ce.js.map",
+    "static/css/2.1c7ffa40.chunk.css": "/muta-docs/static/css/2.1c7ffa40.chunk.css",
+    "static/js/2.beca10e4.chunk.js": "/muta-docs/static/js/2.beca10e4.chunk.js",
+    "static/js/2.beca10e4.chunk.js.map": "/muta-docs/static/js/2.beca10e4.chunk.js.map",
+    "index.html": "/muta-docs/index.html",
+    "precache-manifest.0fb93ed2ee6a86c21199c7e5690b96de.js": "/muta-docs/precache-manifest.0fb93ed2ee6a86c21199c7e5690b96de.js",
+    "service-worker.js": "/muta-docs/service-worker.js",
+    "static/css/2.1c7ffa40.chunk.css.map": "/muta-docs/static/css/2.1c7ffa40.chunk.css.map",
+    "static/css/main.20664993.chunk.css.map": "/muta-docs/static/css/main.20664993.chunk.css.map",
+    "static/media/logo.png": "/muta-docs/static/media/logo.1bb4191c.png",
+    "static/media/toggle.svg": "/muta-docs/static/media/toggle.6c9682ed.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ccf8f8ce.js",
+    "static/css/2.1c7ffa40.chunk.css",
+    "static/js/2.beca10e4.chunk.js",
+    "static/css/main.20664993.chunk.css",
+    "static/js/main.a9d0f143.chunk.js"
+  ]
+}
