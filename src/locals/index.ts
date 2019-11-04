@@ -16,11 +16,11 @@ i18n
       zh,
     },
     fallbackLng: 'en',
-    debug: true,
+    // debug: true,
     interpolation: {
       escapeValue: false, // not needed for react!!
     },
-
+    whitelist: languages,
     // react i18next special options (optional)
     react: {
       wait: false,

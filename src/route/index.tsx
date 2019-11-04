@@ -39,7 +39,7 @@ export default ({ config }: { config: any }) => {
       defaultPage = pages && pages.length > 0 && pages[0].path
     }
   }
-  console.info(defaultPage)
+  // console.info(defaultPage)
 
   const basename: any = process.env.PUBLIC_URL || ''
 
