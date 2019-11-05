@@ -30,4 +30,16 @@ i18n
     },
   })
 
+for (let i = 0; i < languages.length; i++) {
+  const language = languages[i]
+  if (
+    window.location.pathname.startsWith(
+      `${process.env.PUBLIC_URL}/${language}/`
+    )
+  ) {
+    i18n.changeLanguage(language)
+    break
+  }
+}
+
 export default i18n
