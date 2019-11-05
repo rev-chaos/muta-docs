@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/muta-docs/precache-manifest.0fb93ed2ee6a86c21199c7e5690b96de.js"
+  "/muta-docs/precache-manifest.08deb5b301a2d43c6d1c8cf1a161f42a.js"
 );
 
 self.addEventListener('message', (event) => {
